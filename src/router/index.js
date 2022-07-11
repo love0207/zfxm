@@ -12,6 +12,7 @@ const Favorate = () => import('@/views/Favorate/index.vue')
 const Myrent = () => import('@/views/Myrent/index.vue')
 const Details = () => import('@/views/Details')
 const Gorent = () => import('@/views/Gorent')
+const Map = () => import('@/views/Map')
 const routes = [
   { path: '/login', component: Login },
   {
@@ -29,7 +30,8 @@ const routes = [
   { path: '/favorate', component: Favorate },
   { path: '/myrent', component: Myrent },
   { path: '/details/:houseCode', component: Details, name: 'details' },
-  { path: '/gorent', component: Gorent }
+  { path: '/gorent', component: Gorent },
+  { path: '/map', component: Map }
 ]
 
 const router = new VueRouter({

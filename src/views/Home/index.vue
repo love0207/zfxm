@@ -14,7 +14,7 @@
             ></span>
           </template>
         </van-search>
-        <i class="iconfont icon-ditu"></i>
+        <i class="iconfont icon-ditu" @click="$router.push('/map')"></i>
       </div>
     </div>
     <div class="house">
@@ -29,7 +29,7 @@
             <img src="@/assets/下载 (1).png" alt="" />
           </template>
         </van-grid-item>
-        <van-grid-item text="地图找房" >
+        <van-grid-item text="地图找房" @click="$router.push('/map')">
           <template #icon>
             <img src="@/assets/下载 (2).png" alt="" />
           </template>

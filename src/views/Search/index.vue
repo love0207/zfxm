@@ -10,7 +10,7 @@
               ></span>
             </template>
           </van-search>
-          <i class="iconfont icon-ditu"></i>
+          <i class="iconfont icon-ditu" @click="$router.push('/map')"></i>
         </div>
       </template>
     </van-nav-bar>

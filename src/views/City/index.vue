@@ -69,7 +69,7 @@ export default {
     },
     fn (item) {
       this.$store.commit('setCity', item)
-      this.$router.push('/home')
+      this.$router.go(-1)
     }
   },
   computed: {},
