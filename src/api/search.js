@@ -6,3 +6,13 @@ export const getSearch = (id) => {
     params: { id: id }
   })
 }
+
+/**
+ * 根据条件查询房屋
+ * @returns
+ */
+export const getHouse = () => {
+  return request({
+    url: '/houses'
+  })
+}

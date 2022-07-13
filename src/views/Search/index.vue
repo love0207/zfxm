@@ -18,17 +18,17 @@
       <van-sticky>
         <van-dropdown-menu active-color="#20b97a">
           <van-dropdown-item title="区域"
-            ><van-picker :columns="column1" value-key="label"/>
+            ><van-picker :columns="column1" value-key="label" />
             <van-button class="white" type="default">取消</van-button>
             <van-button class="green" type="primary">确定</van-button>
           </van-dropdown-item>
           <van-dropdown-item title="方式"
-            ><van-picker :columns="column2" value-key="label"/>
+            ><van-picker :columns="column2" value-key="label" />
             <van-button class="white" type="default">取消</van-button>
             <van-button class="green" type="primary">确定</van-button>
           </van-dropdown-item>
           <van-dropdown-item title="租金"
-            ><van-picker :columns="column3" value-key="label"/>
+            ><van-picker :columns="column3" value-key="label" />
             <van-button class="white" type="default">取消</van-button>
             <van-button class="green" type="primary">确定</van-button>
           </van-dropdown-item>
@@ -42,14 +42,20 @@
       position="right"
       :style="{ height: '100%', width: '79%' }"
     ></van-popup>
+    <HouseDetails :list="list"></HouseDetails>
   </div>
 </template>
 
 <script>
-import { getSearch } from '@/api/search'
+import { getSearch, getHouse } from '@/api/search'
+import HouseDetails from '@/components/HouseDetails.vue'
 export default {
   name: 'Search',
   async created () {
+    this.$toast.loading({
+      message: '加载中...',
+      forbidClick: true
+    })
     const res = await getSearch(this.$store.state.city.value)
     console.log(res)
     res.data.body.area.children[0].children = [{ label: '' }]
@@ -57,6 +63,8 @@ export default {
     this.column1 = [res.data.body.area, res.data.body.subway]
     this.column2 = res.data.body.rentType
     this.column3 = res.data.body.price
+    this.getHouse()
+    this.$toast.loading.forbidClick = false
   },
   data () {
     return {
@@ -68,17 +76,22 @@ export default {
       column3: [
 
       ],
-      show: false
+      show: false,
+      list: []
     }
   },
   methods: {
-
+    async getHouse () {
+      const res = await getHouse()
+      console.log(res)
+      this.list = res.data.body.list
+    }
   },
   computed: {},
   watch: {},
   filters: {},
   components: {
-
+    HouseDetails
   }
 }
 </script>
