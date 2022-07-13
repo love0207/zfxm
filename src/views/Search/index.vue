@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <van-nav-bar left-arrow @click-left="$router.push('/home')">
       <template #title>
         <div class="search">
@@ -41,7 +41,38 @@
       v-model="show"
       position="right"
       :style="{ height: '100%', width: '79%' }"
-    ></van-popup>
+    >
+      <dl class="filter-more-dl">
+        <dt>户型</dt>
+        <dd>
+          <span v-for="(item, index) in cityObj.roomType" :key="index">{{
+            item.label
+          }}</span>
+        </dd>
+        <dt>朝向</dt>
+        <dd>
+          <span v-for="(item, index) in cityObj.oriented" :key="index">{{
+            item.label
+          }}</span>
+        </dd>
+        <dt>楼层</dt>
+        <dd>
+          <span v-for="(item, index) in cityObj.floor" :key="index">{{
+            item.label
+          }}</span>
+        </dd>
+        <dt>房屋亮点</dt>
+        <dd>
+          <span v-for="(item, index) in cityObj.characteristic" :key="index">{{
+            item.label
+          }}</span>
+        </dd>
+      </dl>
+      <div class="filter-foot">
+        <span class="filter-foot-cancel">清除</span>
+        <span class="filter-foot-ok">确定</span>
+      </div>
+    </van-popup>
     <HouseDetails :list="list"></HouseDetails>
   </div>
 </template>
@@ -58,6 +89,7 @@ export default {
     })
     const res = await getSearch(this.$store.state.city.value)
     console.log(res)
+    this.cityObj = res.data.body
     res.data.body.area.children[0].children = [{ label: '' }]
     res.data.body.subway.children[0].children = [{ label: '' }]
     this.column1 = [res.data.body.area, res.data.body.subway]
@@ -77,6 +109,7 @@ export default {
 
       ],
       show: false,
+      cityObj: {},
       list: []
     }
   },
@@ -97,6 +130,9 @@ export default {
 </script>
 
 <style scoped lang='less'>
+.container{
+  margin-bottom: 50px;
+}
 /deep/.van-nav-bar__content {
   height: 50px;
 }
@@ -145,5 +181,64 @@ export default {
 }
 /deep/.van-dropdown-menu__bar--opened {
   z-index: 0;
+}
+.filter-more-dl {
+  padding: 0 15px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  dt {
+    margin: 20px 0;
+    font-size: 15px;
+    display: block;
+  }
+  dd {
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 14px;
+    display: block;
+    margin-inline-start: 40px;
+    &:last-child {
+      border-bottom: 0;
+    }
+    span {
+      display: inline-block;
+      height: 32px;
+      width: 70px;
+      margin: 0 18px 15px 0;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      line-height: 32px;
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+    }
+  }
+}
+.filter-foot {
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  display: flex;
+  .filter-foot-cancel {
+    flex: 1 1;
+    color: #21b97a;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+    width: 33%;
+  }
+  .filter-foot-ok {
+    border-radius: 0;
+    flex: 2 1;
+    color: #fff;
+    background-color: #21b97a;
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+  }
 }
 </style>
